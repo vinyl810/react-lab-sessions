@@ -1,5 +1,12 @@
 # LAB1: tutorial
 
+## Lab 세팅
+
+1. `node >= 21`, corresponding `npm`
+2. Lab 설치: `npm i`
+3. Lab 개발: `npm run dev`
+4. Lab 채점: `npm run test`
+
 ## 만들 것
 
 1. +1 버튼과 -1 버튼이 있는 카운터 프로그램을 만듭니다.
@@ -12,9 +19,8 @@
 5. 기록은 누적됩니다.
 ![counter 3](./images/counter-3.png)
 
-## Lab 세팅
+## 작업할 파일
 
-1. `node >= 21`, corresponding `npm`
-2. Lab 설치: `npm i`
-3. Lab 개발: `npm run dev`
-4. Lab 채점: `npm run test`
+* `src/App.tsx`
+* `src/StyledButton.tsx`
+* `src/StyledList.tsx`
