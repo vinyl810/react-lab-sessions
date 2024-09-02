@@ -7,8 +7,8 @@
  */
 
 export interface ListProps {
-  records: AnyForExam;
-  id?: AnyForExam;
+  records: number[];
+  id?: string;
 }
 
 /**
@@ -19,8 +19,8 @@ export interface ListProps {
  *   - index는 리스트 아이템의 인덱스입니다.
  */
 export interface ListItemProps {
-  children?: AnyForExam;
-  index?: AnyForExam;
+  children?: string;
+  index?: number;
 }
 
 function ListItem(props: ListItemProps) {
@@ -34,7 +34,9 @@ function ListItem(props: ListItemProps) {
   return (
     <li
       className="my-1 flex h-12 w-32 items-center justify-center rounded-sm bg-zinc-300 text-zinc-800"
+      key={props.index}
     >
+      {props.children}
     </li>
   );
   /* Your code ends here */
@@ -50,7 +52,20 @@ function List(props: ListProps) {
    */
   /* Your code starts here */
   return (
-    <ul className="mt-4 border-2 border-zinc-500 p-2">
+    <ul id={props.id} className="mt-4 border-2 border-zinc-500 p-2">
+      {
+        props.records.length === 0 ? 
+        <ListItem children="기록이 없습니다."/>
+        :
+        props.records.map((value, index) => {
+          return (
+          <ListItem 
+            key={index}
+            children={`${index + 1}번째 기록: ${value}`} 
+          />
+          );
+        })
+      }
     </ul>
   );
   /* Your code ends here */
