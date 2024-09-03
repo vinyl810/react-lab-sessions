@@ -10,10 +10,10 @@
 
 export interface StyledButtonProps {
   /* Your code starts here */
-  children?: AnyForExam;
-  onClick?: AnyForExam;
-  id?: AnyForExam;
-  className?: AnyForExam;
+  children?: string;
+  onClick?: () => void;
+  id?: string;
+  className?: string;
   /* Your code ends here */
 }
 
@@ -28,9 +28,12 @@ function StyledButton(props: StyledButtonProps) {
   /* Your code starts here */
   return (
     <button
-      className="my-1 flex h-8 w-20 items-center justify-center rounded-md bg-zinc-500 text-white"
+      id={props.id}
+      onClick={props.onClick}
+      className={`${props.className} flex justify-center items-center bg-zinc-500 my-1 rounded-md w-20 h-8 text-white`}
     >
-    </button>
+      {props.children}
+    </button >
   );
   /* Your code ends here */
 }
