@@ -10,10 +10,10 @@
 
 export interface StyledButtonProps {
   /* Your code starts here */
-  children?: AnyForExam;
-  onClick?: AnyForExam;
-  id?: AnyForExam;
-  className?: AnyForExam;
+  children?: React.ReactNode;
+  onClick?: () => void;
+  id?: string;
+  className?: string;
   /* Your code ends here */
 }
 
@@ -26,10 +26,14 @@ function StyledButton(props: StyledButtonProps) {
    * - 버튼의 id 속성은 props로 전달받은 id를 사용합니다.
    */
   /* Your code starts here */
+
   return (
     <button
-      className="my-1 flex h-8 w-20 items-center justify-center rounded-md bg-zinc-500 text-white"
+      id={props.id}
+      className={`my-1 flex h-8 w-20 items-center justify-center rounded-md bg-zinc-500 text-white ${props.className}`}
+      onClick={props.onClick}
     >
+      {props.children}
     </button>
   );
   /* Your code ends here */
