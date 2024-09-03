@@ -7,8 +7,8 @@
  */
 
 export interface ListProps {
-  records: AnyForExam;
-  id?: AnyForExam;
+  records: number[];
+  id?: string;
 }
 
 /**
@@ -19,8 +19,8 @@ export interface ListProps {
  *   - index는 리스트 아이템의 인덱스입니다.
  */
 export interface ListItemProps {
-  children?: AnyForExam;
-  index?: AnyForExam;
+  children?: string;
+  index?: number;
 }
 
 function ListItem(props: ListItemProps) {
@@ -33,8 +33,10 @@ function ListItem(props: ListItemProps) {
   /* Your code starts here */
   return (
     <li
-      className="my-1 flex h-12 w-32 items-center justify-center rounded-sm bg-zinc-300 text-zinc-800"
+      key={props.index}
+      className='flex justify-center items-center bg-zinc-300 my-1 rounded-sm w-32 h-12 text-zinc-800'
     >
+      {props.children}
     </li>
   );
   /* Your code ends here */
@@ -43,14 +45,21 @@ function ListItem(props: ListItemProps) {
 function List(props: ListProps) {
   /**
    * TASK2: List 컴포넌트를 완성합니다.
-   * - records 배열이 비어있는 경우, ListItem에는 "기록이 없습니다."를 전달하여 출력합니다.
+   * - records 배열이 비어있는 경우, ListItem에는 '기록이 없습니다.'를 전달하여 출력합니다.
    * - records 배열에 있는 각 요소를 ListItem 컴포넌트로 변환합니다.
    * - 배열이 비어있지 않은 경우, ListItem에는 n번째 기록: m 형식으로 출력합니다.
    * - ListItem 컴포넌트에는 index 속성을 전달하여 각 리스트 아이템의 인덱스를 전달합니다.
    */
   /* Your code starts here */
   return (
-    <ul className="mt-4 border-2 border-zinc-500 p-2">
+    <ul className='border-2 border-zinc-500 mt-4 p-2'>
+      {props.records.length === 0 ? (
+        <ListItem children='기록이 없습니다.' />
+      ) : (
+        props.records.map((record, index) => (
+          <ListItem key={index} index={index} children={`${index + 1}번째 기록: ${record}`} />
+        ))
+      )}
     </ul>
   );
   /* Your code ends here */
