@@ -3,8 +3,8 @@ import StyledButton from '../src/components/StyledButton';
 
 test('TEST1: StyledButton', () => {
   render(
-    <StyledButton id="test-button">TEST</StyledButton>,
+    <StyledButton type="blue" className="blue-button">TEST</StyledButton>,
   );
   const linkElement = screen.getByText('TEST');
-  expect(linkElement.id).toBe('test-button');
+  expect(linkElement.classList.contains('blue-button')).toBe(true);
 });
