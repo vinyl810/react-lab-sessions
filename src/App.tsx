@@ -5,26 +5,18 @@
  * ! 이번 LAB에서는 주어진 파일 외에 다른 파일을 수정하거나 생성하지 않습니다.
  * ! Happy Coding :)
  */
+import { useState } from 'react';
+import StyledButton from './components/StyledButton';
 
 function App() {
-  /**
-   * TASK2: 상태를 정의합니다.
-   * 1. 전체, 관심목록 탭을 구분하는 상태 (탭 상태는 'all', 'favorite' 중 하나)
-   * 2. 할 일 목록을 저장하는 배열 상태 (할 일은 id, title, isFavorite 속성을 가진 객체)
-   */
-
+  const [tab, setTab] = useState<'all' | 'favorite'>('all');
+  const [todos, setTodos] = useState<{ id: number, title: string, isFavorite: boolean }[]>([]);
   return (
     <main className="flex flex-col items-center py-4">
       <h1 className="mt-4 text-4xl">TODO APP</h1>
       <div id="tab-list" role="tab-list" className="mt-4">
-        {/**
-         * TASK3-1: StyledButton 컴포넌트를 이용하여 전체와 관심목록 탭을 추가합니다.
-         * 1. 전체 탭을 클릭하면 tab 상태를 'all'로 변경합니다.
-         * 2. 관심목록 탭을 클릭하면 tab 상태를 'favorite'로 변경합니다.
-         * 3. 현재 선택된 탭은 파란색으로 표시합니다. (type 속성을 사용하세요)
-         * 4. 전체 탭과 관심목록 탭은 각각 '전체'와 '관심목록'으로 표시합니다. (children 속성을 사용하세요)
-         * 5. 다른 요소 없이, StyledButton 컴포넌트를 두 개 사용하여 구현합니다.
-         */}
+        <StyledButton type={tab === 'all' ? 'blue' : 'gray'} onClick={() => setTab('all')} children="전체" />
+        <StyledButton type={tab === 'favorite' ? 'blue' : 'gray'} onClick={() => setTab('favorite')} children="관심목록" />
       </div>
       <input
         type="text"
@@ -32,19 +24,16 @@ function App() {
         className="mt-4 border border-gray-300 p-1 placeholder:text-center"
         placeholder="할 일을 입력하세요."
         onKeyDown={(e) => {
-          /**
-           * TASK3-2: 할 일을 입력하고 **엔터 키를 누르면** 할 일 목록에 추가합니다.
-           * 1. 입력한 할 일을 상태에 추가합니다.
-           * 2. 이 때, 할 일은 id, title, isFavorite 속성을 가진 객체여야 합니다.
-           * 3. id는 현재 할 일 목록의 마지막 id보다 1 큰 값으로 지정합니다.
-           * 4. title은 입력한 값으로 지정합니다.
-           * 5. isFavorite은 false로 지정합니다.
-           * 6. 입력한 후 입력창을 초기화합니다.
-           */
+          if (e.key === 'Enter' && e.currentTarget.value) {
+            const newId = todos.length ? todos[todos.length - 1].id + 1 : 1;
+            setTodos([...todos, { id: newId, title: e.currentTarget.value, isFavorite: false }]);
+            e.currentTarget.value = '';
+          }
         }}
       />
       <div className="mt-2 flex w-96 justify-center">
-        {/**
+        {
+          /**
            * TASK4: 할 일 목록을 표시합니다.
            * 1. 할 일 목록을 표시합니다.
            * 2. 할 일 목록은 id, title, isFavorite 속성을 가진 객체입니다.
@@ -66,7 +55,24 @@ function App() {
            * 10. 탭에 따라 전체 목록 또는 관심목록만 표시합니다.
            *  - 전체 탭: tab 상태가 'all'인 경우, isFavorite 속성에 관계없이 모든 할 일을 표시합니다. (기본값)
            *  - 관심목록 탭: tab 상태가 'favorite'인 경우, isFavorite 속성이 true인 할 일만 표시합니다.
-           */}
+           */
+          todos.length ? (
+            <ul role="todo-list" className="w-96">
+              {
+                todos.map(todo => (
+                  (tab === 'all' || (tab === 'favorite' && todo.isFavorite)) &&
+                  <li id={`todo-${todo.id}`} className="grid grid-cols-[40px,1fr,60px] justify-items-center border-b border-gray-300 py-2" key={todo.id}>
+                    <StyledButton type={todo.isFavorite ? 'active-star' : 'star'} onClick={() => setTodos(todos.map(t => t.id === todo.id ? { ...t, isFavorite: !t.isFavorite } : t))} children={todo.title} />
+                    <p>{todo.title}</p>
+                    <StyledButton type="red" onClick={() => setTodos(todos.filter(t => t.id !== todo.id))}>삭제</StyledButton>
+                  </li>
+                ))
+              }
+            </ul>
+          ) : (
+            <p className="text-lg">목록이 없습니다.</p>
+          )
+        }
       </div>
     </main>
   );
