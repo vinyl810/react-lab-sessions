@@ -15,11 +15,11 @@
  */
 
 interface StyledButtonProps {
-  type: AnyForExam;
-  children?: AnyForExam;
-  id?: AnyForExam;
-  className?: AnyForExam;
-  onClick?: AnyForExam;
+  type: 'blue' | 'red' | 'gray' | 'star' | 'active-star';
+  children?: React.ReactNode;
+  id?: string;
+  className?: string;
+  onClick?: () => void;
 }
 
 function StarIcon({ fill }: {fill: string}) {
@@ -48,13 +48,13 @@ function StarIcon({ fill }: {fill: string}) {
  * 9. id 속성이 있는 경우 버튼에 해당 id를 추가합니다.
  */
 function StyledButton({ type, children, onClick, className, id }: StyledButtonProps) {
-  // your code here
-
   return (
-    <button>
-      {
-        // Your code here
-      }
+    <button
+      id={id}
+      className={`${type === 'blue' ? 'bg-blue-500 text-white' : type === 'red' ? 'bg-red-500 text-white' : type === 'gray' ? 'bg-gray-300' : ''} ${className}`}
+      onClick={onClick}
+    >
+      {type === 'star' || type === 'active-star' ? <StarIcon fill={type === 'star' ? '#CCCCCC' : '#ED8A19'} /> : children || ''}
     </button>
   );
 }
