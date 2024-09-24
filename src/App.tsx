@@ -63,7 +63,7 @@ function App() {
                   (tab === 'all' || (tab === 'favorite' && todo.isFavorite)) &&
                   <li id={`todo-${todo.id}`} className="grid grid-cols-[40px,1fr,60px] justify-items-center border-b border-gray-300 py-2" key={todo.id}>
                     <StyledButton type={todo.isFavorite ? 'active-star' : 'star'} onClick={() => setTodos(todos.map(t => t.id === todo.id ? { ...t, isFavorite: !t.isFavorite } : t))} children={todo.title} />
-                    <p>{todo.title}</p>
+                    {todo.title}
                     <StyledButton type="red" onClick={() => setTodos(todos.filter(t => t.id !== todo.id))}>삭제</StyledButton>
                   </li>
                 ))
